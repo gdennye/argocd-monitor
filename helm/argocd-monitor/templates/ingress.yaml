@@ -18,7 +18,7 @@ spec:
           service:
             name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-service
             port:
-              name: {{ .Values.service.portName | default "http" }}
+              name: {{ .Values.service.ports.name | default "http" }}
         path: /
         pathType: Prefix
   {{- if .Values.ingress.external.tls.enabled }}
@@ -49,7 +49,7 @@ spec:
           service:
             name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-service
             port:
-              name: {{ .Values.service.portName | default "http" }}
+              name: {{ .Values.service.ports.name | default "http" }}
         path: /
         pathType: Prefix
   {{- if .Values.ingress.internal.tls.enabled }}

@@ -15,4 +15,4 @@ spec:
     - protocol: TCP
       port: {{ .Values.service.ports.port | default 80 }}
       targetPort: {{ .Values.service.ports.targetPort | default 3000 }}
-      name: http
+      name: {{ .Values.service.ports.name | default http }}
