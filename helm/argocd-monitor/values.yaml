@@ -65,7 +65,6 @@ ingress:
       enabled: true
       secretCertificate: ""
     annotations: {}
-
   internal:
     enabled: true
     host: ""
