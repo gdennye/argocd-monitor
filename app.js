@@ -81,26 +81,26 @@ function logout() {
     checkSession();
 }
 
-// Função para atualizar o relógio
-function updateClock() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const seconds = now.getSeconds().toString().padStart(2, '0');
-    const date = now.toLocaleDateString('pt-BR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+// // Função para atualizar o relógio
+// function updateClock() {
+//     const now = new Date();
+//     const hours = now.getHours().toString().padStart(2, '0');
+//     const minutes = now.getMinutes().toString().padStart(2, '0');
+//     const seconds = now.getSeconds().toString().padStart(2, '0');
+//     const date = now.toLocaleDateString('pt-BR', {
+//         weekday: 'long',
+//         year: 'numeric',
+//         month: 'long',
+//         day: 'numeric'
+//     });
 
-    const timeString = `${hours}:${minutes}:${seconds}`;
-    const dateString = `${date}`;
+//     const timeString = `${hours}:${minutes}:${seconds}`;
+//     const dateString = `${date}`;
 
-    // Exibir a hora e data no elemento do relógio
-    document.getElementById('time').textContent = timeString;
-    document.getElementById('location').textContent = `${dateString}`;
-}
+//     // Exibir a hora e data no elemento do relógio
+//     document.getElementById('time').textContent = timeString;
+//     document.getElementById('location').textContent = `${dateString}`;
+// }
 
 // Função para tocar o som
 function playAlertSound() {
@@ -180,9 +180,9 @@ function createAppCard(appName, status) {
 // Chama a função de status das aplicações na primeira vez
 fetchAppStatus();
 
-// Atualizar o relógio a cada segundo
-setInterval(updateClock, 1000);
-updateClock();
+// // Atualizar o relógio a cada segundo
+// setInterval(updateClock, 1000);
+// updateClock();
 
 // Solicitar permissão para som
 requestSoundPermission();

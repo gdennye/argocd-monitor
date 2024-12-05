@@ -1,7 +1,7 @@
 global:
   image: 
     repository: dennyegarcia/argocd-monitor
-    tag: 1.0.0
+    tag: 1.0.1
     pullPolicy: IfNotPresent
 
 deployment: 
