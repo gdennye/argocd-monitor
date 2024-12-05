@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-deployment
+  namespace: {{ required "O campo 'namespace' é obrigatório!" .Values.config.namespace }}
+  annotations:
+    {{- toYaml .Values.ingress.external.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.deployment.replicas | default 1 }}
+  revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit | default 1 }}
+  progressDeadlineSeconds: {{ .Values.deployment.progressDeadlineSeconds | default 3600 }}
+  selector:
+    matchLabels:
+      app: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}
+  strategy:
+    type: {{ .Values.deployment.strategy.type | default "RollingUpdate" }}
+    rollingUpdate:
+      maxSurge: {{ .Values.deployment.strategy.rollingUpdate.maxSurge | default 1 }}
+      maxUnavailable: {{ .Values.deployment.strategy.rollingUpdate.maxUnavailable | default 1 }}
+  template:
+    metadata:
+      labels:
+        app: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}
+    spec:
+      containers:
+      - name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}
+        image: {{ required "O campo 'image' é obrigatório!" .Values.global.image.repository }}:{{ required "O campo 'tag' é obrigatório!" .Values.global.image.tag }}
+        imagePullPolicy: {{ .Values.global.image.pullPolicy | default "IfNotPresent" }}
+        ports:
+        - containerPort: {{ .Values.deployment.ports.http.containerPort | default 3000 }}
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: {{ .Values.deployment.resources.limits.cpu }}
+            memory: {{ .Values.deployment.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.deployment.resources.requests.cpu }}
+            memory: {{ .Values.deployment.resources.requests.memory }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.deployment.probes.readiness.path | default "/" }}
+            port: {{ .Values.deployment.probes.readiness.port | default 3000 }}
+          failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
+          periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
+          successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
+          timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
+        startupProbe:
+          httpGet:
+            path: {{ .Values.deployment.probes.startup.path | default "/" }}
+            port: {{ .Values.deployment.probes.startup.port | default 3000 }}
+          failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
+          periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
+          successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
+          timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.deployment.probes.liveness.path | default "/" }}
+            port: {{ .Values.deployment.probes.liveness.port | default 3000 }}
+          failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
+          periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
+          successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
+          timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}

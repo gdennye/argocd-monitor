@@ -1,0 +1,16 @@
+{
+    "name": "argo-monitor",
+    "version": "1.0.0",
+    "description": "Aplicação para monitorar o status de aplicativos no ArgoCD",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2",
+      "node-fetch": "^2.6.7"
+    },
+    "author": "Dennye Ewerton Garcia",
+    "license": "ISC"
+  }
+  

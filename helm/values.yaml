@@ -1,0 +1,89 @@
+global:
+  image: 
+    repository: dennyegarcia/argocd-monitor
+    tag: 1.0.0
+    pullPolicy: IfNotPresent
+
+deployment: 
+  annotations: {} 
+  revisionHistoryLimit: 1
+  progressDeadlineSeconds: 3600
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  replicas: 1
+  resources: 
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  ports:
+    http:
+      containerPort: 3000
+  probes:
+    readiness:
+      path: /
+      port: 3000
+      failureThreshold: 4
+      periodSeconds: 15
+      successThreshold: 1
+      timeoutSeconds: 10
+    startup:
+      path: /
+      port: 3000
+      failureThreshold: 4
+      periodSeconds: 15
+      successThreshold: 1
+      timeoutSeconds: 10
+    liveness:
+      path: /
+      port: 3000
+      failureThreshold: 4
+      periodSeconds: 15
+      successThreshold: 1
+      timeoutSeconds: 10
+  terminationGracePeriodSeconds: 120
+
+service:
+  type: ClusterIP
+  annotations: {}
+  ports:
+    port: 80
+    targetPort: 3000
+    name: http
+
+ingress:
+  external:
+    enabled: true
+    host: ""
+    ingressClassName: "nginx"
+    tls:
+      enabled: true
+      secretCertificate: ""
+    annotations: {}
+
+  internal:
+    enabled: true
+    host: ""
+    ingressClassName: "nginx"
+    tls:
+      enabled: true
+      secretCertificate: ""
+    annotations: {}
+
+config:
+  name: argo-monitor
+  namespace: argocd
+  argoUrl: "https://argocd-dev.spekter.com.br"
+  username: "monitor"
+  password: "monitor"
+  applicationsList: |
+    [
+      { "name": "app-1", "alias": "App 1" },
+      { "name": "app-2", "alias": "App 2" },
+      { "name": "app-3", "alias": "App 3" }
+    ]

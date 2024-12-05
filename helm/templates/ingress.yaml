@@ -1,0 +1,61 @@
+{{- if .Values.ingress.external.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  {{- if .Values.ingress.external.annotations }}
+  annotations:
+    {{- toYaml .Values.ingress.external.annotations | nindent 4 }}
+  {{- end }}
+  name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-ingress
+  namespace: {{ .Values.namespace }}
+spec:
+  ingressClassName: {{ .Values.ingress.external.ingressClassName | default "nginx" }}
+  rules:
+  - host: {{ required "O campo 'host' é obrigatório!" .Values.ingress.external.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-service
+            port:
+              name: {{ .Values.service.portName | default "http" }}
+        path: /
+        pathType: Prefix
+  {{- if .Values.ingress.external.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ required "O campo 'host' é obrigatório!" .Values.ingress.external.host }}
+    secretName: {{ required "O campo 'secretCertificate' é obrigatório!" .Values.ingress.external.tls.secretCertificate  }}
+  {{- end }}
+{{- end }}
+---
+{{- if .Values.ingress.internal.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  {{- if .Values.ingress.internal.annotations }}
+  annotations:
+    {{- toYaml .Values.ingress.internal.annotations | nindent 4 }}
+  {{- end }}
+  name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-ingress-i
+  namespace: {{ .Values.namespace }}
+spec:
+  ingressClassName: {{ .Values.ingress.internal.ingressClassName | default "nginx" }}
+  rules:
+  - host: {{ required "O campo 'host' é obrigatório!" .Values.ingress.internal.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-service
+            port:
+              name: {{ .Values.service.portName | default "http" }}
+        path: /
+        pathType: Prefix
+  {{- if .Values.ingress.internal.tls.enabled }}
+  tls:
+  - hosts:
+    - {{ required "O campo 'host' é obrigatório!" .Values.ingress.internal.host }}
+    secretName: {{ required "O campo 'secretCertificate' é obrigatório!" .Values.ingress.internal.tls.secretCertificate  }}
+  {{- end }}
+{{- end }}

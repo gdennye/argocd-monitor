@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento Argo CD</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/cncf/artwork/refs/heads/main/projects/argo/horizontal/black/argo-horizontal-black.svg">
+    <style>
+        /* Estilo geral da página */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            background-image: url('https://www.transparenttextures.com/patterns/8-bit.png');
+            background-size: cover;
+        }
+
+        /* Container de login */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo esmaecido */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* Permite ajustes mais refinados */
+        }
+
+        /* Estilos para os campos de entrada */
+        .login-container input {
+            padding: 10px;
+            width: 100%;
+            max-width: 250px; /* Limita a largura máxima do campo de entrada */
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 10px 0; /* Espaçamento entre os campos */
+        }
+
+        .login-container button {
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Centralizando a logo dentro do container */
+        .logo-container {
+            position: absolute;
+            top: -10px; /* Ajuste a distância para o topo conforme necessário */
+            left: 40%;
+            transform: translateX(-50%); /* Centraliza horizontalmente */
+            width: 100px;
+            height: auto;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+
+        /* Link 'Esqueci minha senha' */
+        .forgot-password {
+            color: #4CAF50;
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Container principal após login */
+        .container {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Logo do Argo CD */
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            width: 80px;
+        }
+
+        /* Botão de Logout */
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #F44336;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #D32F2F;
+        }
+
+        /* Cards das aplicações */
+        .app-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .app-card {
+            background-color: #ffffff;
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); /* Efeito de hover com sombra mais forte */
+        }
+
+        /* Nome da aplicação */
+        .app-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+            color: #555;
+        }
+
+        /* Status das aplicações */
+        .status-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .status-text {
+            text-align: center;
+            font-size: 1rem;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        /* Cores dos status */
+        .healthy { background-color: #4CAF50; } /* Verde */
+        .progressing { background-color: #2196F3; } /* Azul */
+        .degraded { background-color: #F44336; } /* Vermelho */
+        .suspended { background-color: #607D8B; } /* Cinza escuro */
+        .missing { background-color: #FFEB3B; } /* Amarelo */
+        .unknown { background-color: #BDBDBD; } /* Cinza claro */
+
+        /* Estilo do relógio, localização e clima */
+        .time-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: right;
+            line-height: 1.5;
+        }
+
+        .location, .weather {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Alerta sonoro */
+        .alert {
+            animation: flash 1s infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tela de Login -->
+    <div class="login-container" id="login-container">
+        <!-- Logo do Argo acima do login -->
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/cncf/artwork/refs/heads/main/projects/argo/horizontal/black/argo-horizontal-black.svg" alt="Argo CD Logo" class="logo">
+        </div>
+        <h2></h2>
+        <input type="text" id="username" placeholder="Usuário" />
+        <input type="password" id="password" placeholder="Senha" />
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <!-- Conteúdo do painel após o login -->
+    <div class="container" id="main-container">
+        <img src="https://raw.githubusercontent.com/gilbarbara/logos/refs/heads/main/logos/argo.svg" alt="Argo CD Logo" class="logo">
+        <h1>Status das Aplicações no Argo CD</h1>
+
+        <!-- Botão de Logout -->
+        <button class="logout-btn" onclick="logout()">Logout</button>
+
+        <!-- Cards de Status das Aplicações -->
+        <div class="app-card-container" id="app-cards">
+            <!-- Aplicações serão injetadas aqui -->
+        </div>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>Dennye Ewerton Garcia - Monitoramento Argo CD</p>
+    </footer>
+
+    <!-- Alerta sonoro -->
+    <audio id="alert-sound" src="http://alienscollection.com/sounds/siren.wav" preload="auto"></audio>
+
+    <!-- Relógio e Localização -->
+    <div class="time-container" id="time-container">
+        <span id="time" class="time"></span>
+        <div id="location" class="location"></div>
+        <div id="weather" class="weather"></div>
+    </div>
+    <script src="app.js"></script> <!-- Carrega o script com a lógica -->
+
+</body>
+</html>

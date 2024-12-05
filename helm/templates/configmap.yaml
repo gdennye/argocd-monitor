@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-configmap
+data:
+  ARGO_URL: {{ .Values.config.argoUrl }}
+  APPLICATIONS_LIST: |
+    {{ .Values.config.applicationsList }}
