@@ -4,7 +4,7 @@ metadata:
   name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-service
   namespace: {{ required "O campo 'namespace' é obrigatório!" .Values.config.namespace }}
   annotations:
-    {{- toYaml .Values.Values.service.annotations | nindent 4 }}
+    {{- toYaml .Values.service.annotations | nindent 4 }}
   labels:
     app: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}
 spec:
