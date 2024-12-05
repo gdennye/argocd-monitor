@@ -53,7 +53,7 @@ ingress:
     annotations: {}
 
 config:
-  name: argo-monitor
+  name: argocd-monitor
   namespace: argocd
   argoUrl: ""
   username: "monitor"
