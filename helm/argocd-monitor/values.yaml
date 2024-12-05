@@ -59,20 +59,20 @@ service:
 ingress:
   external:
     enabled: true
-    host: ""
+    host: "argocd-monitor.spekter.com.br"
     ingressClassName: "nginx"
     tls:
       enabled: true
-      secretCertificate: ""
+      secretCertificate: "certificate-ssl-default"
     annotations: {}
 
   internal:
     enabled: true
-    host: ""
+    host: "argocd-monitor.spekter.com.br"
     ingressClassName: "nginx"
     tls:
       enabled: true
-      secretCertificate: ""
+      secretCertificate: "certificate-ssl-default"
     annotations: {}
 
 config:
