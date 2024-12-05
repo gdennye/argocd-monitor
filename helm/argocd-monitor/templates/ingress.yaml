@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.ingress.external.ingressClassName | default "nginx" }}
   rules:
-  {{- if .Values.ingress.internal.tls.enabled }}
+  {{- if .Values.ingress.external.tls.enabled }}
   - host: {{ required "O campo 'host' é obrigatório!" .Values.ingress.external.host }}
   {{- end }}
     http:
