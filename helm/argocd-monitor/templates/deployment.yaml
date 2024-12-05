@@ -4,8 +4,7 @@ metadata:
   name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-deployment
   namespace: {{ required "O campo 'namespace' é obrigatório!" .Values.config.namespace }}
   annotations:
-    {{- toYaml .Values.ingress.external.annotations | nindent 4 }}
-  {{- end }}
+    {{- toYaml .Values.deployment.annotations | nindent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicas | default 1 }}
   revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit | default 1 }}
