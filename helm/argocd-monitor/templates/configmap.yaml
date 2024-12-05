@@ -5,4 +5,4 @@ metadata:
 data:
   ARGO_URL: {{ .Values.config.argoUrl }}
   APPLICATIONS_LIST: |
-    {{ .Values.config.applicationsList }}
+    {{ .Values.config.applicationsList | nindent 4 }}
