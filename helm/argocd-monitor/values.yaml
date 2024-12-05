@@ -24,28 +24,28 @@ deployment:
   ports:
     http:
       containerPort: 3000
-  probes:
-    readiness:
-      path: /
-      port: 3000
-      failureThreshold: 4
-      periodSeconds: 15
-      successThreshold: 1
-      timeoutSeconds: 10
-    startup:
-      path: /
-      port: 3000
-      failureThreshold: 4
-      periodSeconds: 15
-      successThreshold: 1
-      timeoutSeconds: 10
-    liveness:
-      path: /
-      port: 3000
-      failureThreshold: 4
-      periodSeconds: 15
-      successThreshold: 1
-      timeoutSeconds: 10
+  # probes:
+  #   readiness:
+  #     path: /
+  #     port: 3000
+  #     failureThreshold: 4
+  #     periodSeconds: 15
+  #     successThreshold: 1
+  #     timeoutSeconds: 10
+  #   startup:
+  #     path: /
+  #     port: 3000
+  #     failureThreshold: 4
+  #     periodSeconds: 15
+  #     successThreshold: 1
+  #     timeoutSeconds: 10
+  #   liveness:
+  #     path: /
+  #     port: 3000
+  #     failureThreshold: 4
+  #     periodSeconds: 15
+  #     successThreshold: 1
+  #     timeoutSeconds: 10
   terminationGracePeriodSeconds: 120
 
 service:

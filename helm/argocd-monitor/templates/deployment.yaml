@@ -38,30 +38,30 @@ spec:
           requests:
             cpu: {{ .Values.deployment.resources.requests.cpu }}
             memory: {{ .Values.deployment.resources.requests.memory }}
-        readinessProbe:
-          httpGet:
-            path: {{ .Values.deployment.probes.readiness.path | default "/" }}
-            port: {{ .Values.deployment.probes.readiness.port | default 3000 }}
-          failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
-          periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
-          successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
-          timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
-        startupProbe:
-          httpGet:
-            path: {{ .Values.deployment.probes.startup.path | default "/" }}
-            port: {{ .Values.deployment.probes.startup.port | default 3000 }}
-          failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
-          periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
-          successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
-          timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
-        livenessProbe:
-          httpGet:
-            path: {{ .Values.deployment.probes.liveness.path | default "/" }}
-            port: {{ .Values.deployment.probes.liveness.port | default 3000 }}
-          failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
-          periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
-          successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
-          timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
+        # readinessProbe:
+        #   httpGet:
+        #     path: {{ .Values.deployment.probes.readiness.path | default "/" }}
+        #     port: {{ .Values.deployment.probes.readiness.port | default 3000 }}
+        #   failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
+        #   periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
+        #   successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
+        #   timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
+        # startupProbe:
+        #   httpGet:
+        #     path: {{ .Values.deployment.probes.startup.path | default "/" }}
+        #     port: {{ .Values.deployment.probes.startup.port | default 3000 }}
+        #   failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
+        #   periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
+        #   successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
+        #   timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
+        # livenessProbe:
+        #   httpGet:
+        #     path: {{ .Values.deployment.probes.liveness.path | default "/" }}
+        #     port: {{ .Values.deployment.probes.liveness.port | default 3000 }}
+        #   failureThreshold: {{ .Values.deployment.probes.readiness.failureThreshold | default 4 }}
+        #   periodSeconds: {{ .Values.deployment.probes.readiness.periodSeconds | default 15 }}
+        #   successThreshold: {{ .Values.deployment.probes.readiness.successThreshold | default 1 }}
+        #   timeoutSeconds: {{ .Values.deployment.probes.readiness.timeoutSeconds | default 10 }}
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
