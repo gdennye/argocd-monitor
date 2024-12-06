@@ -5,8 +5,8 @@ kind: Ingress
 metadata:
   annotations:
     {{- toYaml .Values.ingress.internal.annotations | nindent 4 }}
-  name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-ingress-i
-  namespace: {{ .Values.namespace }}
+  name: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-ingress
+  namespace: {{ .Values.config.namespace }}
 spec:
   ingressClassName: {{ .Values.ingress.internal.ingressClassName | default "nginx" }}
   rules:

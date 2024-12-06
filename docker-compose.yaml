@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  monitoramento-argo:
+    image: docker.io/dennyegarcia/argocd-monitor:1.0.4
+    ports:
+      - "8080:80"
+    environment:
+      - ARGO_URL=https://example.local
+      - ARGO_USER=monitor
+      - ARGO_PASSWORD=monitor
+      - APP_LIST='["app1", "app2", "app3"]'

@@ -1,5 +1,5 @@
 apiVersion: v2
-name: argo-monitor
+name: argocd-monitor
 description: A Helm chart for Kubernetes deployments
 type: application
 version: 0.1.0

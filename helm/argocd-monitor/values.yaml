@@ -23,15 +23,18 @@ deployment:
       memory: 128Mi
   ports:
     http:
-      containerPort: 3000
+      containerPort: 80
   terminationGracePeriodSeconds: 120
+  volumeMounts:
+    nginx:
+      mountPath: {}
 
 service:
   type: ClusterIP
   annotations: {}
   ports:
     port: 80
-    targetPort: 3000
+    targetPort: 80
     name: http
 
 ingress:

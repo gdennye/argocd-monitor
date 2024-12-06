@@ -28,7 +28,7 @@ spec:
         image: {{ required "O campo 'image' é obrigatório!" .Values.global.image.repository }}:{{ required "O campo 'tag' é obrigatório!" .Values.global.image.tag }}
         imagePullPolicy: {{ .Values.global.image.pullPolicy | default "IfNotPresent" }}
         ports:
-        - containerPort: {{ .Values.deployment.ports.http.containerPort | default 3000 }}
+        - containerPort: {{ .Values.deployment.ports.http.containerPort | default 80 }}
           name: http
           protocol: TCP
         resources:
@@ -38,6 +38,28 @@ spec:
           requests:
             cpu: {{ .Values.deployment.resources.requests.cpu }}
             memory: {{ .Values.deployment.resources.requests.memory }}
+        volumeMounts:
+        - mountPath: "/etc/nginx/conf.d"
+          name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
+          readOnly: true
+          subPath: default.conf
+        - mountPath: "/usr/share/nginx/html/"
+          name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}-config
+          readOnly: true
+          subPath: config.json
+      volumes:
+        - name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
+          configMap:
+            name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
+            items:
+              - key: default.conf
+                path: default.conf
+        - name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}-config
+          secret:
+            secretName: {{ required "O campo 'name' é obrigatório!" .Values.config.name }}-secret
+            items:
+              - key: config.json
+                path: config.json
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
