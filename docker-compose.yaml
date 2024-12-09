@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - ARGO_URL=https://example.local
+      - ARGO_URL=https://argocd-dev.spekter.com.br
       - ARGO_USER=monitor
       - ARGO_PASSWORD=monitor
       - APP_LIST='["app1", "app2", "app3"]'
