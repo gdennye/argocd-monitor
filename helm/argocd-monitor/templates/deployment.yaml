@@ -42,11 +42,11 @@ spec:
         - mountPath: "/etc/nginx/conf.d"
           name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
           readOnly: true
-          subPath: default.conf
+          # subPath: default.conf
         - mountPath: "/usr/share/nginx/html/"
           name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}-config
           readOnly: true
-          subPath: config.json
+          # subPath: config.json
       volumes:
         - name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
           configMap:
