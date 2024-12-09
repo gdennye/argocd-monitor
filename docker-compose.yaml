@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
   monitoramento-argo:
-    image: docker.io/dennyegarcia/argocd-monitor:1.0.4
+    image: docker.io/dennyegarcia/argocd-monitor:1.0.5
     ports:
       - "8080:80"
     environment:
       - ARGO_URL=https://argocd-dev.spekter.com.br
       - ARGO_USER=monitor
       - ARGO_PASSWORD=monitor
-      - APP_LIST='["app1", "app2", "app3"]'
+      - APP_LIST='["helm-admin", "helm-cronjobs"]'
