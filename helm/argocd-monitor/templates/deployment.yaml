@@ -43,7 +43,7 @@ spec:
           name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
           readOnly: true
           # subPath: default.conf
-        - mountPath: "/usr/share/nginx/html"
+        - mountPath: "/tmp"
           name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}-config
           readOnly: true
           subPath: config.json

@@ -285,7 +285,7 @@
 
         // Função para carregar o arquivo JSON com as configurações
         async function loadConfig() {
-            const response = await fetch('config.json');
+            const response = await fetch('/tmp/config.json');
             return response.json();  // Retorna as variáveis de ambiente como um objeto
         }
 
