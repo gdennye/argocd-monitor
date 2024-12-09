@@ -46,7 +46,7 @@ spec:
         - mountPath: "/tmp"
           name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}-config
           readOnly: true
-          subPath: config.json
+          # subPath: config.json
       volumes:
         - name: nginx-{{ required "O campo 'name' é obrigatório!" .Values.config.name }}
           configMap:
