@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento Argo CD</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/cncf/artwork/refs/heads/main/projects/argo/horizontal/black/argo-horizontal-black.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div class="login-container" id="login-container">
+        <!-- Logo do Argo acima do login -->
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/cncf/artwork/refs/heads/main/projects/argo/horizontal/black/argo-horizontal-black.svg" alt="Argo CD Logo" class="logo">
+        </div>
+        <h2></h2>
+        <input type="text" id="username" placeholder="Usuário" />
+        <input type="password" id="password" placeholder="Senha" />
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <!-- Conteúdo do painel após o login -->
+    <div class="container" id="main-container">
+        <img src="https://raw.githubusercontent.com/gilbarbara/logos/refs/heads/main/logos/argo.svg" alt="Argo CD Logo" class="logo">
+        <h1>Status das Aplicações no Argo CD</h1>
+
+        <!-- Botão de Logout -->
+        <button class="logout-btn" onclick="logout()">Logout</button>
+
+        <!-- Cards de Status das Aplicações -->
+        <div class="app-card-container" id="app-cards">
+            <!-- Aplicações serão injetadas aqui -->
+        </div>
+
+        <!-- Contêiner para o botão de controle de som e legenda -->
+        <div id="sound-controls">
+            <!-- Botão de mute -->
+            <button id="mute-button" onclick="toggleMute()">🔊</button>
+
+            <!-- Legenda das cores das bolinhas de status -->
+            <div id="status-legend">
+                <div class="legend-item">
+                    <span class="legend-circle healthy"></span> Healthy
+                </div>
+                <div class="legend-item">
+                    <span class="legend-circle progressing"></span> Progressing
+                </div>
+                <div class="legend-item">
+                    <span class="legend-circle degraded"></span> Degraded
+                </div>
+                <div class="legend-item">
+                    <span class="legend-circle suspended"></span> Suspended
+                </div>
+                <div class="legend-item">
+                    <span class="legend-circle missing"></span> Missing
+                </div>
+                <div class="legend-item">
+                    <span class="legend-circle unknown"></span> Unknown
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerta sonoro -->
+        <audio id="alert-sound" src="http://alienscollection.com/sounds/siren.wav" preload="auto"></audio>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; Dennye Ewerton Garcia - Monitoramento Argo CD</p>
+    </footer>
+
+    <!-- Relógio e Localização -->
+    <div class="time-container" id="time-container">
+        <span id="time" class="time"></span>
+        <div id="location" class="location"></div>
+        <div id="weather" class="weather"></div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,12 +1,8 @@
-version: '3.7'
-
+version: "3.8"
 services:
-  monitoramento-argo:
-    image: docker.io/dennyegarcia/argocd-monitor:1.0.5
+  argo-monitor:
+    image: nginx:alpine
     ports:
-      - "8080:80"
-    environment:
-      - ARGO_URL=https://argocd-dev.spekter.com.br
-      - ARGO_USER=monitor
-      - ARGO_PASSWORD=monitor
-      - APP_LIST='["helm-admin", "helm-cronjobs"]'
+      - "80:80"
+    volumes:
+      - ./public:/usr/share/nginx/html
